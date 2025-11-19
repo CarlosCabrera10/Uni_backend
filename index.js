@@ -1,13 +1,23 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import authRoutes from "./src/routes/authRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
 
 const app = express();
-app.use(cors());
+// Allow frontend dev servers to access the API
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true
+  })
+);
+app.use(express.json());
 
-// Página simple ADMIN
-app.get("/admin", (req, res) => {
-  res.send("<h1 style='text-align:center;margin-top:50px;'>ADMIN</h1>");
-});
+// Rutas básicas
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Backend corriendo en puerto ${PORT}`));
