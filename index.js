@@ -5,8 +5,8 @@ import authRoutes from "./src/routes/authRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 
 const app = express();
-// Allow frontend dev servers to access the API
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+// Allow frontend dev server to access the API
+const allowedOrigins = [process.env.FRONTEND_URL || "http://localhost:5173"];
 app.use(
   cors({
     origin: allowedOrigins,
